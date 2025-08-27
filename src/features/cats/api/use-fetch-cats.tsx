@@ -6,19 +6,29 @@ import { CATS_LIMIT_PER_PAGE } from '@/lib/constants';
 import { CatListItem, FetchCatsQuery, SortByType } from '@/lib/types';
 
 const useFetchCats = () => {
-  const CURRENT_PAGE_INTIAL_VALUE = 1;
+  const CURRENT_PAGE_INITIAL_VALUE = 1;
   const SORT_BY_INITIAL_VALUE = SortByType.RANDOM;
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const getInitialPage = () => {
+    const pageParam = Number(searchParams.get('page'));
+    return pageParam >= 1 ? pageParam : CURRENT_PAGE_INITIAL_VALUE;
+  };
+
+  const getInitialSort = () => {
+    const orderParam = searchParams.get('order') as SortByType;
+    return orderParam || SORT_BY_INITIAL_VALUE;
+  };
 
   const [cats, setCats] = useState<CatListItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(CURRENT_PAGE_INTIAL_VALUE);
+  const [currentPage, setCurrentPage] = useState(getInitialPage);
+  const [sortBy, setSortBy] = useState<SortByType>(getInitialSort);
   const [totalPages, setTotalPages] = useState(1);
   const [limit] = useState(CATS_LIMIT_PER_PAGE);
-  const [sortBy, setSortBy] = useState<SortByType>(SORT_BY_INITIAL_VALUE);
-
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
 
   const changeSortOrder = (order: SortByType) => {
     setSortBy(order);
@@ -31,7 +41,7 @@ const useFetchCats = () => {
   };
 
   const handlePrevPage = () => {
-    if (currentPage !== 1) {
+    if (currentPage > 1) {
       setCurrentPage((prevCount) => prevCount - 1);
     }
   };
@@ -51,10 +61,10 @@ const useFetchCats = () => {
           })
         ).data;
 
-        setTotalPages(catsData.paginationCount / limit);
         setCats(catsData.cats);
+        setTotalPages(Math.ceil(catsData.paginationCount / limit));
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching cats: ', error);
       } finally {
         setIsLoading(false);
       }
@@ -63,18 +73,7 @@ const useFetchCats = () => {
   }, [currentPage, limit, sortBy]);
 
   useEffect(() => {
-    const pageParam =
-      Number(searchParams.get('page')) || CURRENT_PAGE_INTIAL_VALUE;
-    const orderParam =
-      (searchParams.get('order') as SortByType) || SORT_BY_INITIAL_VALUE;
-
-    if (pageParam !== currentPage) setCurrentPage(pageParam);
-    if (orderParam !== sortBy) setSortBy(orderParam);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams();
     params.set('page', String(currentPage));
     if (sortBy) params.set('order', sortBy);
 
