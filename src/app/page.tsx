@@ -1,11 +1,7 @@
 'use client';
 import CatListCard from '@/features/cats/components/cat-list-card';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowDownUpIcon,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+import { ArrowDownUpIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import CatListSort from '@/features/cats/components/cat-list-sort';
 import CatListSkeleton from '@/features/cats/components/cat-list-skeleton';
 import useFetchCats from '@/features/cats/api/use-fetch-cats';
@@ -23,7 +19,7 @@ export default function Home() {
     totalPages,
   } = useFetchCats();
 
-  const disablePreviousButton = currentPage === 0 || isLoading;
+  const disablePreviousButton = currentPage === 1 || isLoading;
   const disableNextButton = currentPage === totalPages || isLoading;
   const disableSortByDropdown = isLoading;
 
@@ -64,7 +60,7 @@ export default function Home() {
           <ChevronLeft className="size-4" />
           Previous
         </Button>
-        <Button>{currentPage + 1}</Button>
+        <Button>{currentPage}</Button>
         <Button
           variant={'outline'}
           size={'lg'}
