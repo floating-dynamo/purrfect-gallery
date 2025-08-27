@@ -21,13 +21,12 @@ const axiosCatApiInstance = axios.create({
 
 const apiService: ApiService = {
   async fetchCats({ limit, page, order }) {
-    console.log(limit, page, order);
     try {
       const response = await axiosCatApiInstance.get('/images/search', {
         params: { limit, page, order },
       });
       const paginationCount = response?.headers?.['pagination-count'];
-      return { cats: [...response.data], paginationCount };
+      return { cats: response.data, paginationCount };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(
