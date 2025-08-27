@@ -5,13 +5,16 @@ export interface CatBreedItem {
   height: string;
   life_span: string;
   breed_group: string;
+  description: string;
+  origin: string;
+  temperament: string;
 }
 export interface CatCategoryItem {
   id: number;
   name: string;
 }
 export interface CatListItem {
-  breeds: CatBreedItem[];
+  breeds?: CatBreedItem[];
   height: number;
   id: string;
   url: string;
@@ -24,9 +27,19 @@ interface FetchCatsQuery {
   limit?: number;
   page?: number;
 }
+export type FetchCatDetailsResponse = CatListItem & {
+  mime_type: string;
+  breed_ids: string;
+};
+interface FetchCatDetailsQuery {
+  id: string;
+}
 
 export interface ApiService {
   fetchCats: ({ limit, page }: FetchCatsQuery) => Promise<FetchCatsResponse>;
+  fetchCatById: ({
+    id,
+  }: FetchCatDetailsQuery) => Promise<FetchCatDetailsResponse>;
 }
 
 export enum HTTP_STATUS_CODES {

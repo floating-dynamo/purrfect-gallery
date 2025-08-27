@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '27.media.tumblr.com',
+        hostname: '*.media.tumblr.com',
       },
     ],
   },
