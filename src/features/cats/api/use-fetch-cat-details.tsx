@@ -13,10 +13,9 @@ const useFetchCatDetails = ({ id }: { id: string }) => {
       try {
         setIsLoading(true);
         const catDetailResponse = await axios.get(`/api/cats/${id}`);
-        console.log(catDetailResponse.data);
         setCatDetails(catDetailResponse.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsLoading(false);
       }

@@ -17,8 +17,6 @@ export default function CatPage() {
   const { catDetails, isLoading } = useFetchCatDetails({ id: catId });
   const showSkeleton = isLoading || !catDetails;
 
-  console.log(showSkeleton, 'showSkeleton');
-
   const handleBackClick = () => {
     router.push('/');
   };
