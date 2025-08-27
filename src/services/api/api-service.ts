@@ -23,7 +23,7 @@ const apiService: ApiService = {
   async fetchCats({ limit, page, order }) {
     try {
       const response = await axiosCatApiInstance.get('/images/search', {
-        params: { limit, page, order },
+        params: { limit, page, order, has_breeds: true },
       });
       const paginationCount = response?.headers?.['pagination-count'];
       return { cats: response.data, paginationCount };
