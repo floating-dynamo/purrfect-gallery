@@ -64,7 +64,7 @@ export default function Home() {
   }, [currentPage, limit, sortBy]);
 
   if (isLoading && cats.length === 0) {
-    return <Loader />;
+    return <Loader title='Purrr... Fetching Cats...'/>;
   }
 
   return (

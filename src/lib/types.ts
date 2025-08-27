@@ -3,8 +3,6 @@ export interface CatBreedItem {
   name: string;
   weight: string;
   height: string;
-  life_span: string;
-  breed_group: string;
   description: string;
   origin: string;
   temperament: string;

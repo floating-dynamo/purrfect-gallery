@@ -41,7 +41,7 @@ export default function CatPage() {
   }, [catId]);
 
   if (isLoading || !catDetails) {
-    return <Loader />;
+    return <Loader title='Purr... Fetching the details...'/>;
   }
 
   return (
