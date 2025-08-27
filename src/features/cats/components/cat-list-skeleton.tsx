@@ -11,7 +11,7 @@ const CatListSkeleton = ({ totalCards }: CatListSkeletonProps) => {
     .map((_item, index) => index + 1);
 
   return (
-    <div className='flex flex-wrap'>
+    <div className='flex flex-wrap items-center justify-center'>
       {cardsList.map((_item) => (
         <Skeleton key={_item} className="rounded-md m-4 w-[250px] h-[250px]" />
       ))}

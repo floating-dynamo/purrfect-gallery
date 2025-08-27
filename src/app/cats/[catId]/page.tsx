@@ -1,25 +1,20 @@
 'use client';
-import axios from 'axios';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 import CatDetailsCard from '@/features/cats/components/cat-details-card';
 import CatDetailsFallback from '@/features/cats/components/cat-details-fallback';
-import { FetchCatDetailsResponse } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { ArrowLeftIcon } from 'lucide-react';
 import CatDetailsSkeleton from '@/features/cats/components/cat-details-skeleton';
 import { Skeleton } from '@/components/ui/skeleton';
+import useFetchCatDetails from '@/features/cats/api/use-fetch-cat-details';
 
 export default function CatPage() {
   const params = useParams<{ catId: string }>();
   const catId = params?.catId;
   const router = useRouter();
-  const [catDetails, setCatDetails] = useState<FetchCatDetailsResponse | null>(
-    null
-  );
-  const [isLoading, setIsLoading] = useState(false);
+  const { catDetails, isLoading } = useFetchCatDetails({ id: catId });
   const showSkeleton = isLoading || !catDetails;
 
   console.log(showSkeleton, 'showSkeleton');
@@ -27,22 +22,6 @@ export default function CatPage() {
   const handleBackClick = () => {
     router.push('/');
   };
-
-  useEffect(() => {
-    async function fetchCatDetails() {
-      try {
-        setIsLoading(true);
-        const catDetailResponse = await axios.get(`/api/cats/${catId}`);
-        console.log(catDetailResponse.data);
-        setCatDetails(catDetailResponse.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchCatDetails();
-  }, [catId]);
 
   return (
     <div className="px-8 py-4 flex-wrap font-sans flex flex-col items-center justify-center">
