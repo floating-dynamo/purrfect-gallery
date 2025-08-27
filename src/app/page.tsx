@@ -1,7 +1,11 @@
 'use client';
 import CatListCard from '@/features/cats/components/cat-list-card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  ArrowDownUpIcon,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import CatListSort from '@/features/cats/components/cat-list-sort';
 import CatListSkeleton from '@/features/cats/components/cat-list-skeleton';
 import useFetchCats from '@/features/cats/api/use-fetch-cats';
@@ -26,8 +30,8 @@ export default function Home() {
   return (
     <div className="flex flex-col font-sans px-8">
       <div className="px-8 flex gap-2 items-center justify-end">
-        <span className="text-sm font-medium text-muted-foreground">
-          Sort By
+        <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+          <ArrowDownUpIcon className="size-4" /> Sort By
         </span>
         <CatListSort
           sortBy={sortBy}
