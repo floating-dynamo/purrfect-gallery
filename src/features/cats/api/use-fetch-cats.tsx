@@ -6,12 +6,15 @@ import { CATS_LIMIT_PER_PAGE } from '@/lib/constants';
 import { CatListItem, FetchCatsQuery, SortByType } from '@/lib/types';
 
 const useFetchCats = () => {
+  const CURRENT_PAGE_INTIAL_VALUE = 1;
+  const SORT_BY_INITIAL_VALUE = SortByType.RANDOM;
+
   const [cats, setCats] = useState<CatListItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(CURRENT_PAGE_INTIAL_VALUE);
   const [totalPages, setTotalPages] = useState(1);
   const [limit] = useState(CATS_LIMIT_PER_PAGE);
-  const [sortBy, setSortBy] = useState<SortByType>(SortByType.RANDOM);
+  const [sortBy, setSortBy] = useState<SortByType>(SORT_BY_INITIAL_VALUE);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -60,9 +63,10 @@ const useFetchCats = () => {
   }, [currentPage, limit, sortBy]);
 
   useEffect(() => {
-    const pageParam = Number(searchParams.get('page')) || 0;
+    const pageParam =
+      Number(searchParams.get('page')) || CURRENT_PAGE_INTIAL_VALUE;
     const orderParam =
-      (searchParams.get('order') as SortByType) || SortByType.RANDOM;
+      (searchParams.get('order') as SortByType) || SORT_BY_INITIAL_VALUE;
 
     if (pageParam !== currentPage) setCurrentPage(pageParam);
     if (orderParam !== sortBy) setSortBy(orderParam);
