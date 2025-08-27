@@ -41,7 +41,7 @@ export default function CatPage() {
   }, [catId]);
 
   if (isLoading || !catDetails) {
-    return <Loader title='Purr... Fetching the details...'/>;
+    return <Loader title="Purr... Fetching the details..." />;
   }
 
   return (
@@ -55,7 +55,7 @@ export default function CatPage() {
           className="rounded-md md:max-w-[32rem] h-[18rem] object-cover"
         />
       )}
-      {catDetails?.breeds ? (
+      {catDetails?.breeds && catDetails?.breeds.length > 0 ? (
         catDetails.breeds.map((breed) => (
           <CatDetailsCard
             key={breed.id}
