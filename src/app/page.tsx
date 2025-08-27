@@ -24,7 +24,7 @@ export default function Home() {
   const disableSortByDropdown = isLoading;
 
   return (
-    <div className="flex flex-col font-sans px-8">
+    <main className="flex flex-col font-sans px-8">
       <div className="px-8 flex gap-2 items-center justify-end">
         <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
           <ArrowDownUpIcon className="size-4" /> Sort By
@@ -33,6 +33,7 @@ export default function Home() {
           sortBy={sortBy}
           changeSortOrder={changeSortOrder}
           disableSortByDropdown={disableSortByDropdown}
+          aria-label="Sort cats by"
         />
       </div>
       <div className="flex flex-wrap items-center justify-center">
@@ -56,6 +57,7 @@ export default function Home() {
           size={'lg'}
           onClick={handlePrevPage}
           disabled={disablePreviousButton}
+          aria-label="Go to previous page"
         >
           <ChevronLeft className="size-4" />
           Previous
@@ -66,11 +68,12 @@ export default function Home() {
           size={'lg'}
           onClick={handleNextPage}
           disabled={disableNextButton}
+          aria-label="Go to next page"
         >
           Next
           <ChevronRight className="size-4" />
         </Button>
       </div>
-    </div>
+    </main>
   );
 }
