@@ -22,10 +22,14 @@ export interface CatListItem {
   categories?: CatCategoryItem[];
 }
 
-export type FetchCatsResponse = CatListItem[];
-interface FetchCatsQuery {
+export interface FetchCatsResponse {
+  cats: CatListItem[];
+  paginationCount: number;
+}
+export interface FetchCatsQuery {
   limit?: number;
   page?: number;
+  order?: SortByType;
 }
 export type FetchCatDetailsResponse = CatListItem & {
   mime_type: string;
@@ -36,10 +40,20 @@ interface FetchCatDetailsQuery {
 }
 
 export interface ApiService {
-  fetchCats: ({ limit, page }: FetchCatsQuery) => Promise<FetchCatsResponse>;
+  fetchCats: ({
+    limit,
+    page,
+    order,
+  }: FetchCatsQuery) => Promise<FetchCatsResponse>;
   fetchCatById: ({
     id,
   }: FetchCatDetailsQuery) => Promise<FetchCatDetailsResponse>;
+}
+
+export enum SortByType {
+  RANDOM = '',
+  ASCENDING = 'ASC',
+  DESCENDING = 'DESC',
 }
 
 export enum HTTP_STATUS_CODES {

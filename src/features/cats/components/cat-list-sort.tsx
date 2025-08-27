@@ -5,27 +5,56 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ChevronsUpDown } from 'lucide-react';
+import { CheckIcon, ChevronsUpDown } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { SortByType } from '@/lib/types';
 
-const CatListSort = () => {
-  const sortOptions = ['Random', 'Ascending', 'Descending'];
+interface CatListSortProps {
+  sortBy: SortByType;
+  changeSortOrder: (order: SortByType) => void;
+  disableSortByDropdown: boolean;
+}
+
+const CatListSort = ({
+  changeSortOrder,
+  sortBy,
+  disableSortByDropdown,
+}: CatListSortProps) => {
+  const sortOptions: { label: string; value: SortByType }[] = [
+    { label: 'Random', value: SortByType.RANDOM },
+    { label: 'Ascending', value: SortByType.ASCENDING },
+    { label: 'Descending', value: SortByType.DESCENDING },
+  ];
+
+  const currentLabel =
+    sortOptions.find((option) => option.value === sortBy)?.label || 'Sort By';
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
           buttonVariants({ variant: 'outline' }),
-          'flex items-center gap-2 font-sans'
+          'flex items-center gap-2 font-sans w-fit'
         )}
+        disabled={disableSortByDropdown}
       >
-        Sort By <ChevronsUpDown className="size-4" />
+        {currentLabel}
+        <ChevronsUpDown className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {sortOptions.map((sortOption) => (
-          <DropdownMenuItem className="font-sans" key={sortOption}>
-            {sortOption}
+        {sortOptions.map(({ label, value }) => (
+          <DropdownMenuItem
+            className="font-sans"
+            key={value}
+            onSelect={() => {
+              if (currentLabel !== sortBy) {
+                changeSortOrder(value);
+              }
+            }}
+          >
+            {label}
+            {sortBy === value && <CheckIcon className="size-4" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

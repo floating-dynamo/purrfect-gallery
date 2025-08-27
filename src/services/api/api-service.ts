@@ -17,16 +17,17 @@ const axiosCatApiInstance = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-  timeout: 10000,
 });
 
 const apiService: ApiService = {
-  async fetchCats({ limit, page }) {
+  async fetchCats({ limit, page, order }) {
+    console.log(limit, page, order);
     try {
       const response = await axiosCatApiInstance.get('/images/search', {
-        params: { limit, page },
+        params: { limit, page, order },
       });
-      return response.data;
+      const paginationCount = response?.headers?.['pagination-count'];
+      return { cats: [...response.data], paginationCount };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(
