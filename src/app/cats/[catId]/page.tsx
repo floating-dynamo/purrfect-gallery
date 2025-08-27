@@ -4,12 +4,13 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import Loader from '@/components/loader';
 import CatDetailsCard from '@/features/cats/components/cat-details-card';
 import CatDetailsFallback from '@/features/cats/components/cat-details-fallback';
 import { FetchCatDetailsResponse } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { ArrowLeftIcon } from 'lucide-react';
+import CatDetailsSkeleton from '@/features/cats/components/cat-details-skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function CatPage() {
   const params = useParams<{ catId: string }>();
@@ -19,6 +20,9 @@ export default function CatPage() {
     null
   );
   const [isLoading, setIsLoading] = useState(false);
+  const showSkeleton = isLoading || !catDetails;
+
+  console.log(showSkeleton, 'showSkeleton');
 
   const handleBackClick = () => {
     router.push('/');
@@ -40,22 +44,24 @@ export default function CatPage() {
     fetchCatDetails();
   }, [catId]);
 
-  if (isLoading || !catDetails) {
-    return <Loader title="Purr... Fetching the details..." />;
-  }
-
   return (
     <div className="px-8 py-4 flex-wrap font-sans flex flex-col items-center justify-center">
-      {catDetails?.url && (
-        <Image
-          src={catDetails.url}
-          alt={`Cat Image - ${catDetails?.id}`}
-          width={catDetails?.width}
-          height={catDetails?.height}
-          className="rounded-md md:max-w-[32rem] h-[18rem] object-cover"
-        />
+      {showSkeleton ? (
+        <Skeleton className="w-full md:w-[32rem] h-[18rem] mb-2" />
+      ) : (
+        catDetails?.url && (
+          <Image
+            src={catDetails.url}
+            alt={`Cat Image - ${catDetails?.id}`}
+            width={catDetails?.width}
+            height={catDetails?.height}
+            className="rounded-md md:max-w-[32rem] h-[18rem] object-cover"
+          />
+        )
       )}
-      {catDetails?.breeds && catDetails?.breeds.length > 0 ? (
+      {showSkeleton ? (
+        <CatDetailsSkeleton />
+      ) : catDetails?.breeds && catDetails?.breeds.length > 0 ? (
         catDetails.breeds.map((breed) => (
           <CatDetailsCard
             key={breed.id}
