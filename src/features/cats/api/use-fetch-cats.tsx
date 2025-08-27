@@ -71,7 +71,7 @@ const useFetchCats = () => {
     if (pageParam !== currentPage) setCurrentPage(pageParam);
     if (orderParam !== sortBy) setSortBy(orderParam);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, sortBy]);
+  }, [searchParams]);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
