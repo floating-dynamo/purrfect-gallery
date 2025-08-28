@@ -7,6 +7,7 @@ A Next.js project showcasing a gallery of cats with sorting, pagination, and det
 - Browse a gallery of cats with pagination.
 - Sort cats dynamically by different criteria (Random, Ascending and Descending).
 - View detailed information about the cats with breed.
+- Used shadcn ui for the ui components (button, dropdown, badge & skeleton) - `src\components\ui`.
 - Responsive layout for mobile and desktop.
 - Skeleton loaders for smooth UX while data is fetching.
 - Direct URL navigation, you can go to any page or sorting order by updating the URL query parameters (`?page=2&order=ASC`).

@@ -53,7 +53,7 @@ export default function CatPage() {
         <CatDetailsFallback />
       )}
       <Button
-        variant={'outline'}
+        disabled={isLoading}
         className="w-full md:w-[32rem] cursor-pointer mt-4"
         onClick={handleBackClick}
       >
