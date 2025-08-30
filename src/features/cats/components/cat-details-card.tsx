@@ -1,12 +1,29 @@
 import { Badge } from '@/components/ui/badge';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/components/ui/card';
+import { CatIcon, InfoIcon, MapPinIcon } from 'lucide-react';
 import React from 'react';
 
 interface CatDetailsCardProps {
-  id: string;
   name: string;
   description: string;
   origin: string;
   temperament?: string;
+  lifeSpan: string;
+  weight: string;
+  traits?: {
+    intelligence: number;
+    grooming: number;
+    healthIssues: number;
+    energyLevel: number;
+    dogFriendly: number;
+    childFriendly: number;
+    strangerFriendly: number;
+  };
 }
 
 const CatDetailsCard = ({
@@ -14,27 +31,79 @@ const CatDetailsCard = ({
   description,
   origin,
   temperament,
+  lifeSpan,
+  weight,
+  traits,
 }: CatDetailsCardProps) => {
   return (
-    <div className="py-4 flex-col flex-wrap md:max-w-[32rem] items-center justify-center">
+    <div className="pb-4 flex-col flex-wrap md:max-w-[32rem] items-center justify-center">
       <h1 className="font-bold text-3xl tracking-tight py-1">{name}</h1>
-      <p>{description}</p>
+      <p className="pt-1 pb-3 text-muted-foreground flex items-center gap-1">
+        <MapPinIcon className="size-5" /> {origin}
+      </p>
 
-      <div className="mt-2">
-        <h2 className="font-bold text-2xl tracking-tight py-1">Origin</h2>
-        <p>{origin}</p>
-      </div>
+      <Card>
+        <CardHeader>
+          <h2 className="font-bold text-2xl tracking-tight flex items-center gap-1">
+            <InfoIcon className="size-5 text-muted-foreground" /> About this
+            breed
+          </h2>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">{description}</p>
+          <div className="mt-2 flex gap-8 items-center">
+            <div>
+              <h4 className="font-bold">Life Span</h4>
+              <p className="text-muted-foreground">{lifeSpan ?? 'N.A'}</p>
+            </div>
+            <div>
+              <h4 className="font-bold">Weight</h4>
+              <p className="text-muted-foreground">{weight ?? 'N.A'}</p>
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="flex gap-1 flex-col items-start">
+          <h2 className="font-bold text-xl tracking-tight py-1">Temperament</h2>
+          <div>
+            {temperament?.split(',').map((label) => (
+              <Badge className="mr-2" key={label}>
+                {label.trim()}
+              </Badge>
+            ))}
+          </div>
+        </CardFooter>
+      </Card>
 
-      <div className="mt-2">
-        <h2 className="font-bold text-2xl tracking-tight py-1">Temperament</h2>
-        <div>
-          {temperament?.split(',').map((label) => (
-            <Badge className="mr-2" key={label}>
-              {label.trim()}
-            </Badge>
-          ))}
-        </div>
-      </div>
+      {traits && (
+        <Card className="mt-4">
+          <CardHeader>
+            <h2 className="font-bold text-2xl tracking-tigh flex items-center gap-1">
+              <CatIcon className="size-5 text-muted-foreground" /> Personality
+              Traits
+            </h2>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              Intelligence {traits.intelligence}
+            </p>
+            <p className="text-muted-foreground">
+              Health Issues {traits.healthIssues}
+            </p>
+            <p className="text-muted-foreground">
+              Energy Level {traits.energyLevel}
+            </p>
+            <p className="text-muted-foreground">
+              Child Friendly {traits.childFriendly}
+            </p>
+            <p className="text-muted-foreground">
+              Stranger Friendly {traits.strangerFriendly}
+            </p>
+            <p className="text-muted-foreground">
+              Dog Friendly {traits.dogFriendly}
+            </p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

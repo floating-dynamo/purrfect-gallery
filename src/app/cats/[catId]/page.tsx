@@ -22,44 +22,69 @@ export default function CatPage() {
   };
 
   return (
-    <div className="px-8 py-4 flex-wrap font-sans flex flex-col items-center justify-center">
-      {showSkeleton ? (
-        <Skeleton className="w-full md:w-[32rem] h-[18rem] mb-2" />
-      ) : (
-        catDetails?.url && (
-          <Image
-            src={catDetails.url}
-            alt={`Cat Image - ${catDetails?.id}`}
-            width={catDetails?.width}
-            height={catDetails?.height}
-            className="rounded-md md:max-w-[32rem] h-[18rem] object-cover"
-          />
-        )
-      )}
+    <div className="px-8 py-4 flex-wrap font-sans flex flex-col md:flex-row gap-8 items-start justify-center min-h-[80vh]">
+      <div className="flex flex-col gap-4 w-full sm:w-fit">
+        <Button
+          disabled={isLoading}
+          className="min-w-[12rem] w-full sm:w-fit cursor-pointer"
+          onClick={handleBackClick}
+        >
+          <ArrowLeftIcon className="size-3" />
+          Back to Gallery
+        </Button>
+
+        {showSkeleton ? (
+          <Skeleton className="rounded-md w-full md:w-[32rem] h-[24rem] object-cover" />
+        ) : (
+          catDetails?.url && (
+            <Image
+              src={catDetails.url}
+              alt={`Cat Image - ${catDetails?.id}`}
+              width={catDetails?.width}
+              height={catDetails?.height}
+              className="rounded-md md:max-w-[32rem] h-[24rem] object-cover"
+            />
+          )
+        )}
+      </div>
       {showSkeleton ? (
         <CatDetailsSkeleton />
       ) : catDetails?.breeds && catDetails?.breeds.length > 0 ? (
-        catDetails.breeds.map((breed) => (
-          <CatDetailsCard
-            key={breed.id}
-            description={breed?.description}
-            name={breed?.name}
-            id={breed.id}
-            origin={breed.origin}
-            temperament={breed.temperament}
-          />
-        ))
+        catDetails.breeds.map((breed) => {
+          const {
+            intelligence,
+            grooming,
+            health_issues: healthIssues,
+            energy_level: energyLevel,
+            dog_friendly: dogFriendly,
+            child_friendly: childFriendly,
+            stranger_friendly: strangerFriendly,
+          } = breed;
+
+          return (
+            <CatDetailsCard
+              key={breed.id}
+              description={breed?.description}
+              name={breed?.name}
+              origin={breed.origin}
+              temperament={breed.temperament}
+              lifeSpan={breed.life_span}
+              weight={breed.weight.imperial}
+              traits={{
+                intelligence,
+                grooming,
+                healthIssues,
+                energyLevel,
+                dogFriendly,
+                childFriendly,
+                strangerFriendly,
+              }}
+            />
+          );
+        })
       ) : (
         <CatDetailsFallback />
       )}
-      <Button
-        disabled={isLoading}
-        className="w-full md:w-[32rem] cursor-pointer mt-4"
-        onClick={handleBackClick}
-      >
-        <ArrowLeftIcon className="size-3" />
-        Back
-      </Button>
     </div>
   );
 }

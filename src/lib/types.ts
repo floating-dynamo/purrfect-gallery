@@ -1,10 +1,11 @@
 export interface CatBreedItem {
   id: string;
   name: string;
-  weight: string;
+  weight: { imperial: string; metric: string };
   height: string;
   description: string;
   origin: string;
+  life_span: string;
   temperament: string;
   child_friendly: number;
   dog_friendly: number;

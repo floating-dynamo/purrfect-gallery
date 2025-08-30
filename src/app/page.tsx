@@ -4,7 +4,7 @@ import CatListSort from '@/features/cats/components/cat-list-sort';
 import CatListSkeleton from '@/features/cats/components/cat-list-skeleton';
 import useFetchCats from '@/features/cats/api/use-fetch-cats';
 import CatBreedFilter from '@/features/cats/components/cat-breed-filter';
-import NoCatsFound from '@/features/cats/components/no-cats-found';
+import CatListFallback from '@/features/cats/components/cat-list-fallback';
 import CatListPagination from '@/features/cats/components/cat-list-pagination';
 
 export default function Home() {
@@ -50,7 +50,7 @@ export default function Home() {
       <div className="flex flex-wrap items-center justify-center my-auto">
         {!isLoading && cats ? (
           cats.length === 0 ? (
-            <NoCatsFound />
+            <CatListFallback />
           ) : (
             cats?.map(({ id, url, height, width }) => (
               <CatListCard
