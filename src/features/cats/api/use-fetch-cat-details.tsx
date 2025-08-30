@@ -1,3 +1,4 @@
+import { apiRoutes } from '@/lib/constants';
 import { FetchCatDetailsResponse } from '@/lib/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -12,7 +13,7 @@ const useFetchCatDetails = ({ id }: { id: string }) => {
     async function fetchCatDetails() {
       try {
         setIsLoading(true);
-        const catDetailResponse = await axios.get(`/api/cats/${id}`);
+        const catDetailResponse = await axios.get(`${apiRoutes.cats}/${id}`);
         setCatDetails(catDetailResponse.data);
       } catch (error) {
         console.error(error);

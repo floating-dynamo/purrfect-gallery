@@ -9,14 +9,31 @@ const app = new Hono()
       const page = Number(ctx.req.query('page')) || 0;
       const limit = Number(ctx.req.query('limit')) || CATS_LIMIT_PER_PAGE;
       const order = (ctx.req.query('order') as SortByType) || SortByType.RANDOM;
+      const breedId = (ctx.req.query('breedId') as SortByType) || '';
 
-      const cats = await service.fetchCats({ limit, page, order });
+      const cats = await service.fetchCats({ limit, page, order, breedId });
       return ctx.json(cats);
     } catch (error) {
       console.error(error);
       return ctx.json(
         {
           error: 'Failed to fetch cats',
+        },
+        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+      );
+    }
+  })
+  .get('/breeds', async (ctx) => {
+    try {
+      const catBreeds = await service.fetchBreeds();
+      return ctx.json({
+        breeds: catBreeds,
+      });
+    } catch (error) {
+      console.error(error);
+      return ctx.json(
+        {
+          error: 'Failed to fetch cat breeds',
         },
         HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
       );

@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { CheckIcon, ChevronsUpDown } from 'lucide-react';
+import { ArrowDownUpIcon, CheckIcon, ChevronsUpDown } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SortByType } from '@/lib/types';
@@ -31,34 +31,39 @@ const CatListSort = ({
     sortOptions.find((option) => option.value === sortBy)?.label || 'Sort By';
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        className={cn(
-          buttonVariants({ variant: 'outline' }),
-          'flex items-center gap-2 font-sans w-fit'
-        )}
-        disabled={disableSortByDropdown}
-      >
-        {currentLabel}
-        <ChevronsUpDown className="size-4" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        {sortOptions.map(({ label, value }) => (
-          <DropdownMenuItem
-            className="font-sans"
-            key={value}
-            onSelect={() => {
-              if (currentLabel !== sortBy) {
-                changeSortOrder(value);
-              }
-            }}
-          >
-            {label}
-            {sortBy === value && <CheckIcon className="size-4" />}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+        <ArrowDownUpIcon className="size-4" /> Sort By
+      </span>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          className={cn(
+            buttonVariants({ variant: 'outline' }),
+            'flex items-center gap-2 font-sans w-fit'
+          )}
+          disabled={disableSortByDropdown}
+        >
+          {currentLabel}
+          <ChevronsUpDown className="size-4" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {sortOptions.map(({ label, value }) => (
+            <DropdownMenuItem
+              className="font-sans"
+              key={value}
+              onSelect={() => {
+                if (currentLabel !== sortBy) {
+                  changeSortOrder(value);
+                }
+              }}
+            >
+              {label}
+              {sortBy === value && <CheckIcon className="size-4" />}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };
 

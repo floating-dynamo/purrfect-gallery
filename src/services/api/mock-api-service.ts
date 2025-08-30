@@ -3,11 +3,17 @@ import {
   FetchCatDetailsResponse,
   FetchCatsResponse,
 } from '@/lib/types';
-import { MOCK_FETCH_CATS_REPSONSE } from '../../features/cats/mock';
+import {
+  MOCK_FETCH_BREEDS_REPSONSE,
+  MOCK_FETCH_CATS_REPSONSE,
+} from '../../features/cats/mock';
 
 const fetchCatsResponse = JSON.parse(
   JSON.stringify(MOCK_FETCH_CATS_REPSONSE)
 ) as FetchCatsResponse;
+const fetchBreedsResponse = JSON.parse(
+  JSON.stringify(MOCK_FETCH_BREEDS_REPSONSE)
+);
 
 const mockApiService: ApiService = {
   async fetchCats({ limit }) {
@@ -30,6 +36,13 @@ const mockApiService: ApiService = {
           reject(new Error('Cat not found'));
         }
       }, 1000);
+    });
+  },
+  async fetchBreeds() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(fetchBreedsResponse);
+      });
     });
   },
 };

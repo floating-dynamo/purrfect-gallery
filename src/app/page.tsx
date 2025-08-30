@@ -1,10 +1,12 @@
 'use client';
 import CatListCard from '@/features/cats/components/cat-list-card';
 import { Button } from '@/components/ui/button';
-import { ArrowDownUpIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CatListSort from '@/features/cats/components/cat-list-sort';
 import CatListSkeleton from '@/features/cats/components/cat-list-skeleton';
 import useFetchCats from '@/features/cats/api/use-fetch-cats';
+import CatBreedFilter from '@/features/cats/components/cat-breed-filter';
+import NoCatsFound from '@/features/cats/components/no-cats-found';
 
 export default function Home() {
   const {
@@ -17,36 +19,49 @@ export default function Home() {
     handleNextPage,
     handlePrevPage,
     totalPages,
+    selectedBreedId,
+    handleChangeSelectedBreedId,
   } = useFetchCats();
+
+  console.log(selectedBreedId);
 
   const disablePreviousButton = currentPage === 1 || isLoading;
   const disableNextButton = currentPage === totalPages || isLoading;
   const disableSortByDropdown = isLoading;
 
   return (
-    <main className="flex flex-col font-sans px-8">
-      <div className="px-8 flex gap-2 items-center justify-end">
-        <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-          <ArrowDownUpIcon className="size-4" /> Sort By
-        </span>
-        <CatListSort
-          sortBy={sortBy}
-          changeSortOrder={changeSortOrder}
-          disableSortByDropdown={disableSortByDropdown}
-          aria-label="Sort cats by"
-        />
+    <main className="flex flex-col font-sans px-8 min-h-[80vh]">
+      <div className="flex flex-wrap my-2 gap-3 items-center justify-end">
+        <div className="px-4 flex gap-2 items-center justify-end">
+          <CatListSort
+            sortBy={sortBy}
+            changeSortOrder={changeSortOrder}
+            disableSortByDropdown={disableSortByDropdown}
+            aria-label="Sort cats by"
+          />
+        </div>
+        <div className="px-4 flex gap-2 my-2 items-center justify-end flex-wrap">
+          <CatBreedFilter
+            selectedBreedId={selectedBreedId}
+            handleChangeSelectedBreedId={handleChangeSelectedBreedId}
+          />
+        </div>
       </div>
-      <div className="flex flex-wrap items-center justify-center">
-        {!isLoading && cats.length > 0 ? (
-          cats?.map(({ id, url, height, width }) => (
-            <CatListCard
-              key={id}
-              id={id}
-              imgUrl={url}
-              imgHeight={height}
-              imgWidth={width}
-            />
-          ))
+      <div className="flex flex-wrap items-center justify-center my-auto">
+        {!isLoading && cats ? (
+          cats.length === 0 ? (
+            <NoCatsFound />
+          ) : (
+            cats?.map(({ id, url, height, width }) => (
+              <CatListCard
+                key={id}
+                id={id}
+                imgUrl={url}
+                imgHeight={height}
+                imgWidth={width}
+              />
+            ))
+          )
         ) : (
           <CatListSkeleton totalCards={limit} />
         )}

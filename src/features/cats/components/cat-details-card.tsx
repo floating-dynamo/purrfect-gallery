@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import React from 'react';
 
 interface CatDetailsCardProps {
-  id: number;
+  id: string;
   name: string;
   description: string;
   origin: string;

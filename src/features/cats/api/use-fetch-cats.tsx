@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
-import { CATS_LIMIT_PER_PAGE } from '@/lib/constants';
+import { apiRoutes, CATS_LIMIT_PER_PAGE } from '@/lib/constants';
 import { CatListItem, FetchCatsQuery, SortByType } from '@/lib/types';
 
 const useFetchCats = () => {
@@ -29,6 +29,11 @@ const useFetchCats = () => {
   const [sortBy, setSortBy] = useState<SortByType>(getInitialSort);
   const [totalPages, setTotalPages] = useState(1);
   const [limit] = useState(CATS_LIMIT_PER_PAGE);
+  const [selectedBreedId, setSelectedBreedId] = useState<string>('');
+
+  const handleChangeSelectedBreedId = (breedId: string) => {
+    setSelectedBreedId(breedId);
+  };
 
   const changeSortOrder = (order: SortByType) => {
     setSortBy(order);
@@ -54,9 +59,12 @@ const useFetchCats = () => {
         if (sortBy) {
           queryParams.order = sortBy;
         }
+        if (selectedBreedId) {
+          queryParams.breedId = selectedBreedId;
+        }
 
         const catsData = (
-          await axios.get('/api/cats', {
+          await axios.get(apiRoutes.cats, {
             params: queryParams,
           })
         ).data;
@@ -70,7 +78,7 @@ const useFetchCats = () => {
       }
     }
     fetchCats();
-  }, [currentPage, limit, sortBy]);
+  }, [currentPage, limit, sortBy, selectedBreedId]);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -91,6 +99,8 @@ const useFetchCats = () => {
     handleNextPage,
     handlePrevPage,
     limit,
+    selectedBreedId,
+    handleChangeSelectedBreedId,
   };
 };
 

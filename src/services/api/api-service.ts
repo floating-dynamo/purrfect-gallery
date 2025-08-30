@@ -20,10 +20,10 @@ const axiosCatApiInstance = axios.create({
 });
 
 const apiService: ApiService = {
-  async fetchCats({ limit, page, order }) {
+  async fetchCats({ limit, page, order, breedId }) {
     try {
       const response = await axiosCatApiInstance.get('/images/search', {
-        params: { limit, page, order, has_breeds: true },
+        params: { limit, page, order, breed_id: breedId, has_breeds: true },
       });
       const paginationCount = response?.headers?.['pagination-count'];
       return { cats: response.data, paginationCount };
@@ -44,6 +44,24 @@ const apiService: ApiService = {
   async fetchCatById({ id }) {
     try {
       const response = await axiosCatApiInstance.get(`/images/${id}`);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          'Axios error:',
+          error.message,
+          error.code,
+          error.response?.data
+        );
+      } else {
+        console.error('Unknown error:', error);
+      }
+      throw error;
+    }
+  },
+  async fetchBreeds() {
+    try {
+      const response = await axiosCatApiInstance.get(`/breeds`);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

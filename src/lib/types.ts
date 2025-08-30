@@ -1,11 +1,18 @@
 export interface CatBreedItem {
-  id: number;
+  id: string;
   name: string;
   weight: string;
   height: string;
   description: string;
   origin: string;
   temperament: string;
+  child_friendly: number;
+  dog_friendly: number;
+  energy_level: number;
+  health_issues: number;
+  stranger_friendly: number;
+  grooming: number;
+  intelligence: number;
 }
 export interface CatCategoryItem {
   id: number;
@@ -28,6 +35,7 @@ export interface FetchCatsQuery {
   limit?: number;
   page?: number;
   order?: SortByType;
+  breedId?: string;
 }
 export type FetchCatDetailsResponse = CatListItem & {
   mime_type: string;
@@ -36,16 +44,21 @@ export type FetchCatDetailsResponse = CatListItem & {
 interface FetchCatDetailsQuery {
   id: string;
 }
+interface FetchBreedsResponse {
+  breeds: CatBreedItem[];
+}
 
 export interface ApiService {
   fetchCats: ({
     limit,
     page,
     order,
+    breedId,
   }: FetchCatsQuery) => Promise<FetchCatsResponse>;
   fetchCatById: ({
     id,
   }: FetchCatDetailsQuery) => Promise<FetchCatDetailsResponse>;
+  fetchBreeds: () => Promise<FetchBreedsResponse>;
 }
 
 export enum SortByType {
