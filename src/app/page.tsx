@@ -30,8 +30,8 @@ export default function Home() {
 
   return (
     <main className="flex flex-col font-sans px-8 min-h-[80vh]">
-      <div className="flex flex-wrap my-2 gap-3 items-center justify-end">
-        <div className="px-4 flex gap-2 items-center justify-end">
+      <div className="flex flex-wrap my-2 gap-3 items-center">
+        <div className="px-4 flex gap-2 items-center">
           <CatListSort
             sortBy={sortBy}
             changeSortOrder={changeSortOrder}
@@ -39,7 +39,7 @@ export default function Home() {
             aria-label="Sort cats by"
           />
         </div>
-        <div className="px-4 flex gap-2 my-2 items-center justify-end flex-wrap">
+        <div className="px-4 flex gap-2 my-2 items-center flex-wrap">
           <CatBreedFilter
             selectedBreedId={selectedBreedId}
             handleChangeSelectedBreedId={handleChangeSelectedBreedId}
