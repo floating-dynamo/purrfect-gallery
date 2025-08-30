@@ -49,58 +49,60 @@ function CatBreedFilter({
 
   return (
     <>
-      <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-        <FilterIcon className="size-4" /> Filter By Breed
-      </span>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger disabled={disableFilterTrigger} asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-fit justify-between"
-          >
-            {selectedBreedId
-              ? breeds
-                  .find((breed) => breed.id === selectedBreedId)
-                  ?.name.slice(0, 5) + '...'
-              : 'Select Breed'}
-            <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-fit p-0 font-sans">
-          <Command>
-            <CommandInput placeholder="Search Breed" />
-            <CommandList>
-              <CommandEmpty>No Breed found.</CommandEmpty>
-              <CommandGroup>
-                {breeds.map((breed) => (
-                  <CommandItem
-                    key={breed.id}
-                    value={breed.id}
-                    onSelect={(currentValue) => {
-                      handleChangeSelectedBreedId(
-                        currentValue === selectedBreedId ? '' : currentValue
-                      );
-                      setOpen(false);
-                    }}
-                  >
-                    <CheckIcon
-                      className={cn(
-                        'mr-2 h-4 w-4',
-                        selectedBreedId === breed.id
-                          ? 'opacity-100'
-                          : 'opacity-0'
-                      )}
-                    />
-                    {breed.name}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
+      <div className='flex gap-2'>
+        <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+          <FilterIcon className="size-4" /> Filter By Breed
+        </span>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger disabled={disableFilterTrigger} asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-fit justify-between"
+            >
+              {selectedBreedId
+                ? breeds
+                    .find((breed) => breed.id === selectedBreedId)
+                    ?.name.slice(0, 5) + '...'
+                : 'Select Breed'}
+              <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-fit p-0 font-sans">
+            <Command>
+              <CommandInput placeholder="Search Breed" />
+              <CommandList>
+                <CommandEmpty>No Breed found.</CommandEmpty>
+                <CommandGroup>
+                  {breeds.map((breed) => (
+                    <CommandItem
+                      key={breed.id}
+                      value={breed.id}
+                      onSelect={(currentValue) => {
+                        handleChangeSelectedBreedId(
+                          currentValue === selectedBreedId ? '' : currentValue
+                        );
+                        setOpen(false);
+                      }}
+                    >
+                      <CheckIcon
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          selectedBreedId === breed.id
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        )}
+                      />
+                      {breed.name}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
       {selectedBreedId && (
         <Button
           onClick={clearBreedFilter}
