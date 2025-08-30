@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import useAddToFavourite from '../api/use-add-to-favourite';
+import useToggleFavourite from '../api/use-toggle-favourite';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 
@@ -14,11 +14,11 @@ interface AddCatToFavouriteProps {
   isFetchingCatDetails: boolean;
 }
 
-const AddCatToFavourite = ({
+const CatToggleFavourite = ({
   catId,
   isFetchingCatDetails,
 }: AddCatToFavouriteProps) => {
-  const { isFavourite, handleToggleFavourite, isLoading } = useAddToFavourite({
+  const { isFavourite, handleToggleFavourite, isLoading } = useToggleFavourite({
     catId,
   });
 
@@ -26,7 +26,10 @@ const AddCatToFavourite = ({
     <div className="absolute bottom-1.5 right-1.5">
       <Tooltip>
         <TooltipTrigger
-          className={cn(buttonVariants({ variant: 'default' }), 'w-fit cursor-pointer')}
+          className={cn(
+            buttonVariants({ variant: 'default' }),
+            'w-fit cursor-pointer'
+          )}
           disabled={isLoading || isFetchingCatDetails}
           onClick={handleToggleFavourite}
         >
@@ -46,4 +49,4 @@ const AddCatToFavourite = ({
   );
 };
 
-export default AddCatToFavourite;
+export default CatToggleFavourite;

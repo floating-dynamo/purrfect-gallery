@@ -9,7 +9,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import CatDetailsSkeleton from '@/features/cats/components/cat-details-skeleton';
 import { Skeleton } from '@/components/ui/skeleton';
 import useFetchCatDetails from '@/features/cats/api/use-fetch-cat-details';
-import AddCatToFavourite from '@/features/cats/components/add-cat-to-favourite';
+import CatToggleFavourite from '@/features/cats/components/cat-toggle-favourite';
 
 export default function CatPage() {
   const params = useParams<{ catId: string }>();
@@ -47,7 +47,7 @@ export default function CatPage() {
             />
           )
         )}
-        <AddCatToFavourite catId={catId} isFetchingCatDetails={isLoading} />
+        <CatToggleFavourite catId={catId} isFetchingCatDetails={isLoading} />
       </div>
       {showSkeleton ? (
         <CatDetailsSkeleton />

@@ -2,7 +2,7 @@ import { apiRoutes } from '@/lib/constants';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const useAddToFavourite = ({ catId }: { catId: string }) => {
+const useToggleFavourite = ({ catId }: { catId: string }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,4 +30,4 @@ const useAddToFavourite = ({ catId }: { catId: string }) => {
   return { isFavourite, handleToggleFavourite, isLoading };
 };
 
-export default useAddToFavourite;
+export default useToggleFavourite;
