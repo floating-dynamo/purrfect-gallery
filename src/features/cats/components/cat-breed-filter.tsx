@@ -1,7 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { CheckIcon, ChevronsUpDownIcon, FilterIcon, TrashIcon } from 'lucide-react';
+import {
+  CheckIcon,
+  ChevronsUpDownIcon,
+  FilterIcon,
+  TrashIcon,
+} from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -23,17 +28,20 @@ import useFetchBreeds from '../api/use-fetch-breeds';
 interface CatBreedFilterProps {
   selectedBreedId: string;
   handleChangeSelectedBreedId: (breedId: string) => void;
+  isFetchingCats: boolean;
 }
 
 function CatBreedFilter({
   selectedBreedId,
   handleChangeSelectedBreedId,
+  isFetchingCats,
 }: CatBreedFilterProps) {
   const { breeds: breedsData, isLoading } = useFetchBreeds();
   const breeds: { id: string; name: string }[] = breedsData.map(
     ({ id, name }) => ({ id, name })
   );
   const [open, setOpen] = React.useState(false);
+  const disableFilterTrigger = isLoading || isFetchingCats;
 
   const clearBreedFilter = () => {
     handleChangeSelectedBreedId('');
@@ -45,7 +53,7 @@ function CatBreedFilter({
         <FilterIcon className="size-4" /> Filter By Breed
       </span>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger disabled={isLoading} asChild>
+        <PopoverTrigger disabled={disableFilterTrigger} asChild>
           <Button
             variant="outline"
             role="combobox"
@@ -53,7 +61,9 @@ function CatBreedFilter({
             className="w-fit justify-between"
           >
             {selectedBreedId
-              ? breeds.find((breed) => breed.id === selectedBreedId)?.name.slice(0, 5) + '...'
+              ? breeds
+                  .find((breed) => breed.id === selectedBreedId)
+                  ?.name.slice(0, 5) + '...'
               : 'Select Breed'}
             <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>

@@ -1,12 +1,11 @@
 'use client';
 import CatListCard from '@/features/cats/components/cat-list-card';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CatListSort from '@/features/cats/components/cat-list-sort';
 import CatListSkeleton from '@/features/cats/components/cat-list-skeleton';
 import useFetchCats from '@/features/cats/api/use-fetch-cats';
 import CatBreedFilter from '@/features/cats/components/cat-breed-filter';
 import NoCatsFound from '@/features/cats/components/no-cats-found';
+import CatListPagination from '@/features/cats/components/cat-list-pagination';
 
 export default function Home() {
   const {
@@ -44,6 +43,7 @@ export default function Home() {
           <CatBreedFilter
             selectedBreedId={selectedBreedId}
             handleChangeSelectedBreedId={handleChangeSelectedBreedId}
+            isFetchingCats={isLoading}
           />
         </div>
       </div>
@@ -67,27 +67,13 @@ export default function Home() {
         )}
       </div>
       <div className="flex items-center justify-center gap-8 w-full py-4">
-        <Button
-          variant={'outline'}
-          size={'lg'}
-          onClick={handlePrevPage}
-          disabled={disablePreviousButton}
-          aria-label="Go to previous page"
-        >
-          <ChevronLeft className="size-4" />
-          Previous
-        </Button>
-        <Button>{currentPage}</Button>
-        <Button
-          variant={'outline'}
-          size={'lg'}
-          onClick={handleNextPage}
-          disabled={disableNextButton}
-          aria-label="Go to next page"
-        >
-          Next
-          <ChevronRight className="size-4" />
-        </Button>
+        <CatListPagination
+          currentPage={currentPage}
+          disableNextButton={disableNextButton}
+          disablePreviousButton={disablePreviousButton}
+          handleNextPage={handleNextPage}
+          handlePrevPage={handlePrevPage}
+        />
       </div>
     </main>
   );

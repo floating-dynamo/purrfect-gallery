@@ -32,11 +32,16 @@ const useFetchCats = () => {
   const [selectedBreedId, setSelectedBreedId] = useState<string>('');
 
   const handleChangeSelectedBreedId = (breedId: string) => {
-    setSelectedBreedId(breedId);
+    if (breedId !== selectedBreedId) {
+      setSelectedBreedId(breedId);
+      setCurrentPage(CURRENT_PAGE_INITIAL_VALUE);
+    }
   };
 
   const changeSortOrder = (order: SortByType) => {
-    setSortBy(order);
+    if (order !== sortBy) {
+      setSortBy(order);
+    }
   };
 
   const handleNextPage = () => {
