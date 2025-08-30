@@ -8,3 +8,4 @@ export const runtime = 'nodejs';
 const app = new Hono().basePath('/api').route('/cats', catRoutes);
 
 export const GET = handle(app);
+export const POST = handle(app);

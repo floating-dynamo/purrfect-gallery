@@ -48,6 +48,13 @@ interface FetchCatDetailsQuery {
 interface FetchBreedsResponse {
   breeds: CatBreedItem[];
 }
+interface AddCatToFavouritesReqBody {
+  id: string;
+}
+interface AddCatToFavouritesResponse {
+  message: string;
+  success: boolean;
+}
 
 export interface ApiService {
   fetchCats: ({
@@ -60,6 +67,9 @@ export interface ApiService {
     id,
   }: FetchCatDetailsQuery) => Promise<FetchCatDetailsResponse>;
   fetchBreeds: () => Promise<FetchBreedsResponse>;
+  addCatToFavourites: ({
+    id,
+  }: AddCatToFavouritesReqBody) => Promise<AddCatToFavouritesResponse>;
 }
 
 export enum SortByType {

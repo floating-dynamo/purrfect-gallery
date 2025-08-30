@@ -977,3 +977,14 @@ export const MOCK_FETCH_BREEDS_REPSONSE = {
     },
   ],
 };
+
+export const MOCK_CAT_FAVOURITES_RESPONSE = [
+  {
+    id: 232413577,
+    user_id: '1ejqec',
+    image_id: 'asf2',
+    sub_id: 'my-user-1234',
+    created_at: '2023-10-28T17:39:28.000Z',
+    image: {},
+  },
+];

@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React, { useMemo } from 'react';
 import {
   CheckIcon,
   ChevronsUpDownIcon,
@@ -36,10 +36,7 @@ function CatBreedFilter({
   handleChangeSelectedBreedId,
   isFetchingCats,
 }: CatBreedFilterProps) {
-  const { breeds: breedsData, isLoading } = useFetchBreeds();
-  const breeds: { id: string; name: string }[] = breedsData.map(
-    ({ id, name }) => ({ id, name })
-  );
+  const { breeds, isLoading } = useFetchBreeds();
   const [open, setOpen] = React.useState(false);
   const disableFilterTrigger = isLoading || isFetchingCats;
 
@@ -49,7 +46,7 @@ function CatBreedFilter({
 
   return (
     <>
-      <div className='flex gap-2'>
+      <div className="flex gap-2">
         <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
           <FilterIcon className="size-4" /> Filter By Breed
         </span>
@@ -63,7 +60,7 @@ function CatBreedFilter({
             >
               {selectedBreedId
                 ? breeds
-                    .find((breed) => breed.id === selectedBreedId)
+                    ?.find((breed) => breed.id === selectedBreedId)
                     ?.name.slice(0, 5) + '...'
                 : 'Select Breed'}
               <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -75,28 +72,30 @@ function CatBreedFilter({
               <CommandList>
                 <CommandEmpty>No Breed found.</CommandEmpty>
                 <CommandGroup>
-                  {breeds.map((breed) => (
-                    <CommandItem
-                      key={breed.id}
-                      value={breed.id}
-                      onSelect={(currentValue) => {
-                        handleChangeSelectedBreedId(
-                          currentValue === selectedBreedId ? '' : currentValue
-                        );
-                        setOpen(false);
-                      }}
-                    >
-                      <CheckIcon
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          selectedBreedId === breed.id
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        )}
-                      />
-                      {breed.name}
-                    </CommandItem>
-                  ))}
+                  {breeds &&
+                    breeds.length > 0 &&
+                    breeds.map((breed) => (
+                      <CommandItem
+                        key={breed.id}
+                        value={breed.id}
+                        onSelect={(currentValue) => {
+                          handleChangeSelectedBreedId(
+                            currentValue === selectedBreedId ? '' : currentValue
+                          );
+                          setOpen(false);
+                        }}
+                      >
+                        <CheckIcon
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            selectedBreedId === breed.id
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          )}
+                        />
+                        {breed.name}
+                      </CommandItem>
+                    ))}
                 </CommandGroup>
               </CommandList>
             </Command>

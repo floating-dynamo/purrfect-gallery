@@ -22,8 +22,6 @@ export default function Home() {
     handleChangeSelectedBreedId,
   } = useFetchCats();
 
-  console.log(selectedBreedId);
-
   const disablePreviousButton = currentPage === 1 || isLoading;
   const disableNextButton = currentPage === totalPages || isLoading;
   const disableSortByDropdown = isLoading;

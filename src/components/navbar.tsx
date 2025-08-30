@@ -8,7 +8,10 @@ const Navbar = () => {
       <h1 className="font-bold text-lg sm:text-2xl flex gap-2">
         {'Purrfect Gallery'} <PawPrint className="size-6" />
       </h1>
-      <Link href={'/'}>Home</Link>
+      <div className='flex gap-4'>
+        <Link href={'/'}>Home</Link>
+        <Link href={'/cats/favourites'}>Favourites</Link>
+      </div>
     </nav>
   );
 };

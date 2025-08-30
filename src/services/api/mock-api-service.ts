@@ -4,6 +4,7 @@ import {
   FetchCatsResponse,
 } from '@/lib/types';
 import {
+  MOCK_CAT_FAVOURITES_RESPONSE,
   MOCK_FETCH_BREEDS_REPSONSE,
   MOCK_FETCH_CATS_REPSONSE,
 } from '../../features/cats/mock';
@@ -13,6 +14,9 @@ const fetchCatsResponse = JSON.parse(
 ) as FetchCatsResponse;
 const fetchBreedsResponse = JSON.parse(
   JSON.stringify(MOCK_FETCH_BREEDS_REPSONSE)
+);
+const fetchCatFavourites = JSON.parse(
+  JSON.stringify(MOCK_CAT_FAVOURITES_RESPONSE)
 );
 
 const mockApiService: ApiService = {
@@ -42,7 +46,20 @@ const mockApiService: ApiService = {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(fetchBreedsResponse);
-      });
+      }, 1000);
+    });
+  },
+  async addCatToFavourites({ id }) {
+    fetchCatFavourites.push({ id: Date.now().toString(), image_id: id });
+    return new Promise((resolve) => {
+      setTimeout(
+        () =>
+          resolve({
+            message: 'Added cat to favourites',
+            success: true,
+          }),
+        1000
+      );
     });
   },
 };

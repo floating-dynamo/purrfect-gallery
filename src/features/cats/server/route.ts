@@ -59,6 +59,44 @@ const app = new Hono()
         HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
       );
     }
+  })
+  .post('/favourites', async (ctx) => {
+    try {
+      const body = await ctx.req.json();
+      const id = body['id'];
+
+      if (!id) {
+        return ctx.json(
+          { message: 'The "id" of the cat is required.' },
+          HTTP_STATUS_CODES.BAD_REQUEST
+        );
+      }
+
+      const response = await service.addCatToFavourites({
+        id,
+      });
+
+      if (!response || !response.success) {
+        return ctx.json(
+          { error: 'Could not add cat to favourites' },
+          HTTP_STATUS_CODES.NOT_FOUND
+        );
+      }
+      return ctx.json(
+        {
+          message: 'Added cat to favourites',
+        },
+        HTTP_STATUS_CODES.CREATED
+      );
+    } catch (error) {
+      console.error(error);
+      return ctx.json(
+        {
+          error: 'Could not add cat to favourites',
+        },
+        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+      );
+    }
   });
 
 export default app;

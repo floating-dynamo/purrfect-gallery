@@ -9,6 +9,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import CatDetailsSkeleton from '@/features/cats/components/cat-details-skeleton';
 import { Skeleton } from '@/components/ui/skeleton';
 import useFetchCatDetails from '@/features/cats/api/use-fetch-cat-details';
+import AddCatToFavourite from '@/features/cats/components/add-cat-to-favourite';
 
 export default function CatPage() {
   const params = useParams<{ catId: string }>();
@@ -23,7 +24,7 @@ export default function CatPage() {
 
   return (
     <div className="px-8 py-4 flex-wrap font-sans flex flex-col md:flex-row gap-8 items-start justify-center min-h-[80vh]">
-      <div className="flex flex-col gap-4 w-full sm:w-fit">
+      <div className="flex flex-col gap-4 w-full sm:w-fit relative">
         <Button
           disabled={isLoading}
           className="min-w-[12rem] w-full sm:w-fit cursor-pointer"
@@ -46,6 +47,7 @@ export default function CatPage() {
             />
           )
         )}
+        <AddCatToFavourite catId={catId} isFetchingCatDetails={isLoading} />
       </div>
       {showSkeleton ? (
         <CatDetailsSkeleton />
