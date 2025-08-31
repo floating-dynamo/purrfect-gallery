@@ -27,7 +27,17 @@ export interface CatListItem {
   width: number;
   categories?: CatCategoryItem[];
 }
-
+export interface CatFavouriteListItem {
+  id: number;
+  user_id?: string;
+  image_id: string;
+  sub_id: string | null;
+  created_at: string;
+  image: {
+    id: string;
+    url: string;
+  };
+}
 export interface FetchCatsResponse {
   cats: CatListItem[];
   paginationCount: number;
@@ -55,6 +65,22 @@ interface AddCatToFavouritesResponse {
   message: string;
   success: boolean;
 }
+interface DeleteCatFromFavouriteParams {
+  favouriteId: number;
+}
+interface DeleteCatFromFavouriteResponse {
+  message: string;
+  success: boolean;
+}
+export interface FetchCatsFromFavouritesResponse {
+  cats: CatFavouriteListItem[];
+}
+interface FetchFavouriteByCatIdQuery {
+  catId: string;
+}
+export interface FetchFavouriteByCatIdResponse {
+  cat: CatFavouriteListItem;
+}
 
 export interface ApiService {
   fetchCats: ({
@@ -70,6 +96,13 @@ export interface ApiService {
   addCatToFavourites: ({
     id,
   }: AddCatToFavouritesReqBody) => Promise<AddCatToFavouritesResponse>;
+  deleteCatFromFavourite: ({
+    favouriteId,
+  }: DeleteCatFromFavouriteParams) => Promise<DeleteCatFromFavouriteResponse>;
+  fetchFavouriteFromCatId: ({
+    catId,
+  }: FetchFavouriteByCatIdQuery) => Promise<FetchFavouriteByCatIdResponse>;
+  fetchCatsFromFavourites: () => Promise<FetchCatsFromFavouritesResponse>;
 }
 
 export enum SortByType {

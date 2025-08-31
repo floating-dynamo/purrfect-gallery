@@ -978,13 +978,18 @@ export const MOCK_FETCH_BREEDS_REPSONSE = {
   ],
 };
 
-export const MOCK_CAT_FAVOURITES_RESPONSE = [
-  {
-    id: 232413577,
-    user_id: '1ejqec',
-    image_id: 'asf2',
-    sub_id: 'my-user-1234',
-    created_at: '2023-10-28T17:39:28.000Z',
-    image: {},
-  },
-];
+export const MOCK_CAT_FAVOURITES_RESPONSE = {
+  cats: [
+    {
+      id: 232544479,
+      user_id: 'oaeq5i',
+      image_id: 'Co5BH7YZT',
+      sub_id: null,
+      created_at: '2025-08-30T17:57:34.000Z',
+      image: {
+        id: 'Co5BH7YZT',
+        url: 'https://cdn2.thecatapi.com/images/Co5BH7YZT.jpg',
+      },
+    },
+  ],
+};

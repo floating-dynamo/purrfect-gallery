@@ -11,15 +11,21 @@ import { buttonVariants } from '@/components/ui/button';
 
 interface AddCatToFavouriteProps {
   catId: string;
+  favouriteId: number | null;
   isFetchingCatDetails: boolean;
+  reTriggerRender: () => void;
 }
 
 const CatToggleFavourite = ({
   catId,
+  favouriteId,
   isFetchingCatDetails,
+  reTriggerRender,
 }: AddCatToFavouriteProps) => {
-  const { isFavourite, handleToggleFavourite, isLoading } = useToggleFavourite({
+  const { handleToggleFavourite, isLoading } = useToggleFavourite({
     catId,
+    favouriteId,
+    reTriggerRender,
   });
 
   return (
@@ -35,13 +41,13 @@ const CatToggleFavourite = ({
         >
           <HeartIcon
             className="size-8 hover:fill-pink-500 cursor-pointer rounded-full p-1"
-            fill={isFavourite ? '#f6339a' : 'none'}
+            fill={favouriteId ? '#f6339a' : 'none'}
             color={'white'}
           />
         </TooltipTrigger>
         <TooltipContent>
           <p className="font-sans">
-            {isFavourite ? 'Remove from favourites' : 'Add to favourites'}
+            {favouriteId ? 'Remove from favourites' : 'Add to favourites'}
           </p>
         </TooltipContent>
       </Tooltip>

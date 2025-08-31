@@ -77,6 +77,51 @@ const apiService: ApiService = {
       throw error;
     }
   },
+  async fetchFavouriteFromCatId({ catId }) {
+    try {
+      const response = await axiosCatApiInstance.get(`/favourites`, {
+        params: {
+          image_id: catId,
+        },
+      });
+
+      return {
+        cat: response.data[0],
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          'Axios error:',
+          error.message,
+          error.code,
+          error.response?.data
+        );
+      } else {
+        console.error('Unknown error:', error);
+      }
+      throw error;
+    }
+  },
+  async fetchCatsFromFavourites() {
+    try {
+      const response = await axiosCatApiInstance.get(`/favourites`);
+      return {
+        cats: response.data,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          'Axios error:',
+          error.message,
+          error.code,
+          error.response?.data
+        );
+      } else {
+        console.error('Unknown error:', error);
+      }
+      throw error;
+    }
+  },
   async addCatToFavourites({ id }) {
     try {
       await axiosCatApiInstance.post(`/favourites`, {
@@ -84,6 +129,25 @@ const apiService: ApiService = {
       });
 
       return { message: 'Added cat to favourites', success: true };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          'Axios error:',
+          error.message,
+          error.code,
+          error.response?.data
+        );
+      } else {
+        console.error('Unknown error:', error);
+      }
+      throw error;
+    }
+  },
+  async deleteCatFromFavourite({ favouriteId }) {
+    try {
+      await axiosCatApiInstance.delete(`/favourites/${favouriteId}`);
+
+      return { message: 'Deleted cat from favourites', success: true };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(

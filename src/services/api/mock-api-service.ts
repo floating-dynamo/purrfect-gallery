@@ -1,6 +1,7 @@
 import {
   ApiService,
   FetchCatDetailsResponse,
+  FetchCatsFromFavouritesResponse,
   FetchCatsResponse,
 } from '@/lib/types';
 import {
@@ -17,7 +18,7 @@ const fetchBreedsResponse = JSON.parse(
 );
 const fetchCatFavourites = JSON.parse(
   JSON.stringify(MOCK_CAT_FAVOURITES_RESPONSE)
-);
+) as FetchCatsFromFavouritesResponse;
 
 const mockApiService: ApiService = {
   async fetchCats({ limit }) {
@@ -49,13 +50,56 @@ const mockApiService: ApiService = {
       }, 1000);
     });
   },
+  async fetchFavouriteFromCatId({ catId }) {
+    const favCat = fetchCatFavourites.cats.find(
+      (fav) => fav.image_id === catId
+    )!;
+    return new Promise((resolve) => {
+      setTimeout(
+        () =>
+          resolve({
+            cat: favCat,
+          }),
+        1000
+      );
+    });
+  },
+  async fetchCatsFromFavourites() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(fetchCatFavourites), 1000);
+    });
+  },
   async addCatToFavourites({ id }) {
-    fetchCatFavourites.push({ id: Date.now().toString(), image_id: id });
+    fetchCatFavourites.cats.push({
+      id: Date.now(),
+      image_id: id,
+      created_at: Date.now().toString(),
+      sub_id: null,
+      image: {
+        id,
+        url: '',
+      },
+    });
     return new Promise((resolve) => {
       setTimeout(
         () =>
           resolve({
             message: 'Added cat to favourites',
+            success: true,
+          }),
+        1000
+      );
+    });
+  },
+  async deleteCatFromFavourite({ favouriteId }) {
+    fetchCatFavourites.cats = fetchCatFavourites.cats.filter(
+      (favCat) => favCat.id !== favouriteId
+    );
+    return new Promise((resolve) => {
+      setTimeout(
+        () =>
+          resolve({
+            message: 'Deleted the cat from favourites',
             success: true,
           }),
         1000

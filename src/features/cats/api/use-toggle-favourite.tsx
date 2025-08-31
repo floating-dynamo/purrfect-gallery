@@ -2,19 +2,28 @@ import { apiRoutes } from '@/lib/constants';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const useToggleFavourite = ({ catId }: { catId: string }) => {
-  const [isFavourite, setIsFavourite] = useState(false);
+const useToggleFavourite = ({
+  catId,
+  favouriteId,
+  reTriggerRender,
+}: {
+  catId: string;
+  favouriteId: number | null;
+  reTriggerRender?: () => void;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleToggleFavourite = async () => {
     try {
       setIsLoading(true);
-      if (!isFavourite) {
+      if (!favouriteId) {
         await axios.post(apiRoutes.favourites, { id: catId });
       } else {
-        // delete from favourites
+        await axios.delete(`${apiRoutes.favourites}/${favouriteId}`);
       }
-      setIsFavourite((prev) => !prev);
+      if (reTriggerRender) {
+        reTriggerRender();
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -22,12 +31,7 @@ const useToggleFavourite = ({ catId }: { catId: string }) => {
     }
   };
 
-  useEffect(() => {
-    // Make API call to get all favs and check if current is fav based on cat id
-    console.log(catId);
-  }, [catId]);
-
-  return { isFavourite, handleToggleFavourite, isLoading };
+  return { handleToggleFavourite, isLoading };
 };
 
 export default useToggleFavourite;

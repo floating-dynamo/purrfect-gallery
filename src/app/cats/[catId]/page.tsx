@@ -10,23 +10,41 @@ import CatDetailsSkeleton from '@/features/cats/components/cat-details-skeleton'
 import { Skeleton } from '@/components/ui/skeleton';
 import useFetchCatDetails from '@/features/cats/api/use-fetch-cat-details';
 import CatToggleFavourite from '@/features/cats/components/cat-toggle-favourite';
+import useFetchFavouriteByCatId from '@/features/cats/api/use-fetch-favourite-by-cat-id';
+import { useEffect, useState } from 'react';
 
 export default function CatPage() {
   const params = useParams<{ catId: string }>();
   const catId = params?.catId;
   const router = useRouter();
   const { catDetails, isLoading } = useFetchCatDetails({ id: catId });
-  const showSkeleton = isLoading || !catDetails;
+  const {
+    favouriteId,
+    refetch: refetchFavouriteData,
+    isLoading: isFetchingFavouriteItem,
+  } = useFetchFavouriteByCatId({ catId });
+  const showSkeleton = isLoading || !catDetails || isFetchingFavouriteItem;
+  const disableButtons = isLoading || isFetchingFavouriteItem;
+  const [rerenderDetails, setRerenderDetails] = useState(false);
 
   const handleBackClick = () => {
     router.push('/');
   };
 
+  const reTriggerRender = () => {
+    setRerenderDetails((prev) => !prev);
+  };
+
+  useEffect(() => {
+    // After Liking or unliking, trigger a refetch for favourite.
+    refetchFavouriteData();
+  }, [rerenderDetails, refetchFavouriteData]);
+
   return (
     <div className="px-8 py-4 flex-wrap font-sans flex flex-col md:flex-row gap-8 items-start justify-center min-h-[80vh]">
       <div className="flex flex-col gap-4 w-full sm:w-fit relative">
         <Button
-          disabled={isLoading}
+          disabled={disableButtons}
           className="min-w-[12rem] w-full sm:w-fit cursor-pointer"
           onClick={handleBackClick}
         >
@@ -47,7 +65,12 @@ export default function CatPage() {
             />
           )
         )}
-        <CatToggleFavourite catId={catId} isFetchingCatDetails={isLoading} />
+        <CatToggleFavourite
+          favouriteId={favouriteId}
+          catId={catId}
+          isFetchingCatDetails={disableButtons}
+          reTriggerRender={reTriggerRender}
+        />
       </div>
       {showSkeleton ? (
         <CatDetailsSkeleton />
