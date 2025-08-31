@@ -1,5 +1,6 @@
 import {
   ApiService,
+  FetchBreedsResponse,
   FetchCatDetailsResponse,
   FetchCatsFromFavouritesResponse,
   FetchCatsResponse,
@@ -15,7 +16,7 @@ const fetchCatsResponse = JSON.parse(
 ) as FetchCatsResponse;
 const fetchBreedsResponse = JSON.parse(
   JSON.stringify(MOCK_FETCH_BREEDS_REPSONSE)
-);
+) as FetchBreedsResponse;
 const fetchCatFavourites = JSON.parse(
   JSON.stringify(MOCK_CAT_FAVOURITES_RESPONSE)
 ) as FetchCatsFromFavouritesResponse;
@@ -47,6 +48,17 @@ const mockApiService: ApiService = {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(fetchBreedsResponse);
+      }, 1000);
+    });
+  },
+  async fetchBreedById({ id }) {
+    const breedDetails = fetchBreedsResponse.breeds.find(
+      (breed) => breed.id === id
+    );
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(breedDetails!);
       }, 1000);
     });
   },

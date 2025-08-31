@@ -77,6 +77,24 @@ const apiService: ApiService = {
       throw error;
     }
   },
+  async fetchBreedById({ id }) {
+    try {
+      const response = await axiosCatApiInstance.get(`/breeds/${id}`);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          'Axios error:',
+          error.message,
+          error.code,
+          error.response?.data
+        );
+      } else {
+        console.error('Unknown error:', error);
+      }
+      throw error;
+    }
+  },
   async fetchFavouriteFromCatId({ catId }) {
     try {
       const response = await axiosCatApiInstance.get(`/favourites`, {

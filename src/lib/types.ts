@@ -55,9 +55,13 @@ export type FetchCatDetailsResponse = CatListItem & {
 interface FetchCatDetailsQuery {
   id: string;
 }
-interface FetchBreedsResponse {
+export interface FetchBreedsResponse {
   breeds: CatBreedItem[];
 }
+interface FetchBreedByIdParams {
+  id: string;
+}
+type FetchBreedByIdResponse = CatBreedItem;
 interface AddCatToFavouritesReqBody {
   id: string;
 }
@@ -98,6 +102,9 @@ export interface ApiService {
     id,
   }: FetchCatDetailsQuery) => Promise<FetchCatDetailsResponse>;
   fetchBreeds: () => Promise<FetchBreedsResponse>;
+  fetchBreedById: ({
+    id,
+  }: FetchBreedByIdParams) => Promise<FetchBreedByIdResponse>;
   addCatToFavourites: ({
     id,
   }: AddCatToFavouritesReqBody) => Promise<AddCatToFavouritesResponse>;

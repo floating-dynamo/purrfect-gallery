@@ -39,6 +39,21 @@ const app = new Hono()
       );
     }
   })
+  .get('/breeds/:breedId', async (ctx) => {
+    try {
+      const breedId = ctx.req.param('breedId');
+      const catBreedDetails = await service.fetchBreedById({ id: breedId });
+      return ctx.json(catBreedDetails);
+    } catch (error) {
+      console.error(error);
+      return ctx.json(
+        {
+          error: 'Failed to fetch cat breed details',
+        },
+        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+      );
+    }
+  })
   .get('/favourites', async (ctx) => {
     try {
       const page = Number(ctx.req.query('page')) || 0;
