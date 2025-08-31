@@ -1,7 +1,58 @@
-import React from 'react';
+'use client';
+import useFetchFavourites from '@/features/cats/api/use-fetch-favourites';
+import CatListCard from '@/features/cats/components/cat-list-card';
+import CatListFallback from '@/features/cats/components/cat-list-fallback';
+import CatListSkeleton from '@/features/cats/components/cat-list-skeleton';
+import CatToggleFavourite from '@/features/cats/components/cat-toggle-favourite';
+import { CATS_LIMIT_PER_PAGE } from '@/lib/constants';
+import React, { useEffect, useState } from 'react';
 
 const FavouritesPage = () => {
-  return <div className="min-h-[80vh] font-sans">FavouritesPage</div>;
+  const {
+    favourites,
+    isLoading,
+    refetch: refetchFavourites,
+  } = useFetchFavourites();
+  const [triggerRerender, setTriggerRerender] = useState(false);
+
+  const reTriggerRender = () => {
+    setTriggerRerender((prev) => !prev);
+  };
+
+  useEffect(() => {
+    refetchFavourites();
+  }, [triggerRerender, refetchFavourites]);
+
+  return (
+    <div className="min-h-[80vh] px-8 py-4">
+      <h1 className="font-bold tracking-tight text-xl font-sans">
+        Favourites List
+      </h1>
+      <div className="flex items-center flex-wrap justify-center min-h-[60vh]">
+        {isLoading ? (
+          <CatListSkeleton totalCards={CATS_LIMIT_PER_PAGE} />
+        ) : favourites && favourites.length > 0 ? (
+          favourites.map((favCat) => (
+            <div key={favCat.id}>
+              <div className="relative">
+                <CatListCard id={favCat.image_id} imgUrl={favCat.image.url} />
+                <div className="absolute bottom-1.5 right-3.5">
+                  <CatToggleFavourite
+                    catId={favCat.image_id}
+                    favouriteId={favCat.id}
+                    isFetchingCatDetails={isLoading}
+                    reTriggerRender={reTriggerRender}
+                  />
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <CatListFallback />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default FavouritesPage;

@@ -105,10 +105,12 @@ const apiService: ApiService = {
   async fetchCatsFromFavourites() {
     try {
       const response = await axiosCatApiInstance.get(`/favourites`);
+      console.log('DATA: ', response.data);
       return {
         cats: response.data,
       };
     } catch (error) {
+      console.log('ERROR occurred: ', error);
       if (axios.isAxiosError(error)) {
         console.error(
           'Axios error:',

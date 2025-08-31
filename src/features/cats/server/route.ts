@@ -39,45 +39,6 @@ const app = new Hono()
       );
     }
   })
-  .get('/:id', async (ctx) => {
-    try {
-      const id = ctx.req.param('id');
-      const cat = await service.fetchCatById({ id });
-      if (!cat) {
-        return ctx.json(
-          { error: 'Cat not found' },
-          HTTP_STATUS_CODES.NOT_FOUND
-        );
-      }
-      return ctx.json(cat);
-    } catch (error) {
-      console.error(error);
-      return ctx.json(
-        {
-          error: 'Failed to fetch cat',
-        },
-        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
-      );
-    }
-  })
-  .get('/favourites/:catId', async (ctx) => {
-    try {
-      const catId = ctx.req.param('catId');
-      const favItemRepsonse = await service.fetchFavouriteFromCatId({ catId });
-      if (!favItemRepsonse) {
-        return ctx.json(HTTP_STATUS_CODES.NO_CONTENT);
-      }
-      return ctx.json(favItemRepsonse);
-    } catch (error) {
-      console.error(error);
-      return ctx.json(
-        {
-          error: 'Failed to fetch fav cat',
-        },
-        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
-      );
-    }
-  })
   .get('/favourites', async (ctx) => {
     try {
       const catsFromFavourites = await service.fetchCatsFromFavourites();
@@ -131,6 +92,24 @@ const app = new Hono()
       );
     }
   })
+  .get('/favourites/:catId', async (ctx) => {
+    try {
+      const catId = ctx.req.param('catId');
+      const favItemRepsonse = await service.fetchFavouriteFromCatId({ catId });
+      if (!favItemRepsonse) {
+        return ctx.json(HTTP_STATUS_CODES.NO_CONTENT);
+      }
+      return ctx.json(favItemRepsonse);
+    } catch (error) {
+      console.error(error);
+      return ctx.json(
+        {
+          error: 'Failed to fetch fav cat',
+        },
+        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+      );
+    }
+  })
   .delete('/favourites/:favouriteId', async (ctx) => {
     try {
       const favouriteId = ctx.req.param('favouriteId');
@@ -148,6 +127,27 @@ const app = new Hono()
         message: 'Deleted cat from favourites',
         success: true,
       });
+    } catch (error) {
+      console.error(error);
+      return ctx.json(
+        {
+          error: 'Failed to fetch cat',
+        },
+        HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+      );
+    }
+  })
+  .get('/:id', async (ctx) => {
+    try {
+      const id = ctx.req.param('id');
+      const cat = await service.fetchCatById({ id });
+      if (!cat) {
+        return ctx.json(
+          { error: 'Cat not found' },
+          HTTP_STATUS_CODES.NOT_FOUND
+        );
+      }
+      return ctx.json(cat);
     } catch (error) {
       console.error(error);
       return ctx.json(

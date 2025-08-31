@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 interface CatListCardProps {
   id: string;
   imgUrl: string;
-  imgHeight: number;
-  imgWidth: number;
+  imgHeight?: number;
+  imgWidth?: number;
 }
 
 const CatListCard = ({ id, imgUrl, imgHeight, imgWidth }: CatListCardProps) => {
@@ -21,8 +21,8 @@ const CatListCard = ({ id, imgUrl, imgHeight, imgWidth }: CatListCardProps) => {
       <Image
         onClick={handleImageClick}
         src={imgUrl}
-        width={imgWidth}
-        height={imgHeight}
+        width={imgWidth || 250}
+        height={imgHeight || 250}
         alt={`Cat Image - ${id}`}
         className="rounded-md m-4 w-[250px] h-[250px] object-cover cursor-pointer"
       />
