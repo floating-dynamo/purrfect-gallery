@@ -8,6 +8,7 @@ import { CatListItem, FetchCatsQuery, SortByType } from '@/lib/types';
 const useFetchCats = () => {
   const CURRENT_PAGE_INITIAL_VALUE = 1;
   const SORT_BY_INITIAL_VALUE = SortByType.RANDOM;
+  const BREED_ID_INITIAL_VALUE = '';
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -23,13 +24,19 @@ const useFetchCats = () => {
     return orderParam || SORT_BY_INITIAL_VALUE;
   };
 
+  const getInitialBreedId = () => {
+    const breedIdParam = searchParams.get('breedId');
+    return breedIdParam || BREED_ID_INITIAL_VALUE;
+  };
+
   const [cats, setCats] = useState<CatListItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(getInitialPage);
   const [sortBy, setSortBy] = useState<SortByType>(getInitialSort);
   const [totalPages, setTotalPages] = useState(1);
   const [limit] = useState(CATS_LIMIT_PER_PAGE);
-  const [selectedBreedId, setSelectedBreedId] = useState<string>('');
+  const [selectedBreedId, setSelectedBreedId] =
+    useState<string>(getInitialBreedId);
 
   const handleChangeSelectedBreedId = (breedId: string) => {
     if (breedId !== selectedBreedId) {
@@ -89,10 +96,11 @@ const useFetchCats = () => {
     const params = new URLSearchParams();
     params.set('page', String(currentPage));
     if (sortBy) params.set('order', sortBy);
+    if (selectedBreedId) params.set('breedId', selectedBreedId);
 
     router.replace(`${pathname}?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, sortBy]);
+  }, [currentPage, sortBy, selectedBreedId]);
 
   return {
     cats,

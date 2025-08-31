@@ -59,9 +59,11 @@ function CatBreedFilter({
               className="w-fit justify-between"
             >
               {selectedBreedId
-                ? breeds
-                    ?.find((breed) => breed.id === selectedBreedId)
-                    ?.name.slice(0, 5) + '...'
+                ? breeds?.find((breed) => breed.id === selectedBreedId)?.name
+                  ? `${breeds
+                      .find((breed) => breed.id === selectedBreedId)!
+                      .name.slice(0, 12)}...`
+                  : 'Loading...'
                 : 'Select Breed'}
               <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
