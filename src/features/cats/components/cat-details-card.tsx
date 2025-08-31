@@ -1,3 +1,4 @@
+import StarRating from '@/components/star-rating';
 import { Badge } from '@/components/ui/badge';
 import {
   Card,
@@ -82,25 +83,31 @@ const CatDetailsCard = ({
               Traits
             </h2>
           </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Intelligence {traits.intelligence}
-            </p>
-            <p className="text-muted-foreground">
-              Health Issues {traits.healthIssues}
-            </p>
-            <p className="text-muted-foreground">
-              Energy Level {traits.energyLevel}
-            </p>
-            <p className="text-muted-foreground">
-              Child Friendly {traits.childFriendly}
-            </p>
-            <p className="text-muted-foreground">
-              Stranger Friendly {traits.strangerFriendly}
-            </p>
-            <p className="text-muted-foreground">
-              Dog Friendly {traits.dogFriendly}
-            </p>
+          <CardContent className="flex flex-wrap gap-8">
+            <div className="flex flex-col items-center mb-2">
+              <p className="text-muted-foreground">Intelligence</p>
+              <StarRating rating={traits.intelligence} />
+            </div>
+            <div className="flex flex-col items-center mb-2">
+              <p className="text-muted-foreground">Health Issues</p>
+              <StarRating rating={traits.healthIssues} />
+            </div>
+            <div className="flex flex-col items-center mb-2">
+              <p className="text-muted-foreground">Energy Level</p>
+              <StarRating rating={traits.energyLevel} />
+            </div>
+            <div className="flex flex-col items-center mb-2">
+              <p className="text-muted-foreground">Child Friendly</p>
+              <StarRating rating={traits.childFriendly} />
+            </div>
+            <div className="flex flex-col items-center mb-2">
+              <p className="text-muted-foreground">Stranger Friendly</p>
+              <StarRating rating={traits.strangerFriendly} />
+            </div>
+            <div className="flex flex-col items-center mb-2">
+              <p className="text-muted-foreground">Dog Friendly</p>
+              <StarRating rating={traits.dogFriendly} />
+            </div>
           </CardContent>
         </Card>
       )}
