@@ -16,9 +16,9 @@ const CompareBreedsPage = () => {
       <h1 className="font-bold text-2xl tracking-tight">Compare Breeds</h1>
       <p className="text-muted-foreground">
         Select two cat breeds to compare their characteristics, temperament, and
-        traits side by side
+        traits side by side.
       </p>
-      <div className="flex flex-col md:flex-row gap-8 w-full items-center justify-evenly mt-8">
+      <div className="flex flex-col md:flex-row gap-8 w-full items-center md:items-start justify-evenly mt-8">
         <div className="flex gap-4 w-full md:w-1/3 flex-col-reverse md:flex-col items-center justify-center">
           <CatBreedsCombobox
             placeholder="Select Breed 1"
