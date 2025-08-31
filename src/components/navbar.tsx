@@ -1,7 +1,6 @@
-import { MenuIcon, PawPrint } from 'lucide-react';
+import { PawPrint } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import { Button } from './ui/button';
 
 const Navbar = () => {
   return (
@@ -10,7 +9,7 @@ const Navbar = () => {
         {'Purrfect Gallery'} <PawPrint className="size-4 sm:size-6" />
       </h1>
       {/* <div className="hidden md:flex gap-4 text-sm sm:text-lg"> */}
-      <div className="hidden md:flex gap-4 text-sm sm:text-lg">
+      <div className="flex gap-4 text-sm sm:text-lg">
         <Link href={'/'}>Home</Link>
         <Link href={'/cats/favourites'}>Favourites</Link>
         <Link href={'/cats/compare-breeds'}>Compare Breeds</Link>
