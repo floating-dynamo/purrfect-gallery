@@ -56,15 +56,14 @@ function CatBreedFilter({
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="w-fit justify-between"
+              className="w-[120px] sm:w-[200px] justify-between"
             >
-              {selectedBreedId
-                ? breeds?.find((breed) => breed.id === selectedBreedId)?.name
-                  ? `${breeds
-                      .find((breed) => breed.id === selectedBreedId)!
-                      .name.slice(0, 12)}...`
-                  : 'Loading...'
-                : 'Select Breed'}
+              <span className="max-w-[120px] truncate sm:max-w-none">
+                {selectedBreedId
+                  ? breeds?.find((breed) => breed.id === selectedBreedId)
+                      ?.name ?? 'Loading...'
+                  : 'Select Breed'}
+              </span>
               <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
