@@ -102,12 +102,19 @@ const apiService: ApiService = {
       throw error;
     }
   },
-  async fetchCatsFromFavourites() {
+  async fetchCatsFromFavourites({ limit, page }) {
     try {
-      const response = await axiosCatApiInstance.get(`/favourites`);
-      console.log('DATA: ', response.data);
+      const response = await axiosCatApiInstance.get(`/favourites`, {
+        params: {
+          page,
+          limit,
+        },
+      });
+      const paginationCount = response?.headers?.['pagination-count'];
+
       return {
         cats: response.data,
+        paginationCount,
       };
     } catch (error) {
       console.log('ERROR occurred: ', error);

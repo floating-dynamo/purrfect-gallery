@@ -74,12 +74,17 @@ interface DeleteCatFromFavouriteResponse {
 }
 export interface FetchCatsFromFavouritesResponse {
   cats: CatFavouriteListItem[];
+  paginationCount: number;
 }
 interface FetchFavouriteByCatIdQuery {
   catId: string;
 }
 export interface FetchFavouriteByCatIdResponse {
   cat: CatFavouriteListItem;
+}
+interface FetchCatsFromFavouritesQuery {
+  page: number;
+  limit: number;
 }
 
 export interface ApiService {
@@ -102,7 +107,10 @@ export interface ApiService {
   fetchFavouriteFromCatId: ({
     catId,
   }: FetchFavouriteByCatIdQuery) => Promise<FetchFavouriteByCatIdResponse>;
-  fetchCatsFromFavourites: () => Promise<FetchCatsFromFavouritesResponse>;
+  fetchCatsFromFavourites: ({
+    page,
+    limit,
+  }: FetchCatsFromFavouritesQuery) => Promise<FetchCatsFromFavouritesResponse>;
 }
 
 export enum SortByType {

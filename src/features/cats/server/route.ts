@@ -41,7 +41,13 @@ const app = new Hono()
   })
   .get('/favourites', async (ctx) => {
     try {
-      const catsFromFavourites = await service.fetchCatsFromFavourites();
+      const page = Number(ctx.req.query('page')) || 0;
+      const limit = Number(ctx.req.query('limit')) || CATS_LIMIT_PER_PAGE;
+
+      const catsFromFavourites = await service.fetchCatsFromFavourites({
+        page,
+        limit,
+      });
       return ctx.json(catsFromFavourites);
     } catch (error) {
       console.error(error);

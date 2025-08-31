@@ -84,27 +84,27 @@ const CatDetailsCard = ({
             </h2>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-8">
-            <div className="flex flex-col items-center mb-2">
+            <div className="flex flex-col mb-2 gap-1">
               <p className="text-muted-foreground">Intelligence</p>
               <StarRating rating={traits.intelligence} />
             </div>
-            <div className="flex flex-col items-center mb-2">
+            <div className="flex flex-col mb-2 gap-1">
               <p className="text-muted-foreground">Health Issues</p>
               <StarRating rating={traits.healthIssues} />
             </div>
-            <div className="flex flex-col items-center mb-2">
+            <div className="flex flex-col mb-2 gap-1">
               <p className="text-muted-foreground">Energy Level</p>
               <StarRating rating={traits.energyLevel} />
             </div>
-            <div className="flex flex-col items-center mb-2">
+            <div className="flex flex-col mb-2 gap-1">
               <p className="text-muted-foreground">Child Friendly</p>
               <StarRating rating={traits.childFriendly} />
             </div>
-            <div className="flex flex-col items-center mb-2">
+            <div className="flex flex-col mb-2 gap-1">
               <p className="text-muted-foreground">Stranger Friendly</p>
               <StarRating rating={traits.strangerFriendly} />
             </div>
-            <div className="flex flex-col items-center mb-2">
+            <div className="flex flex-col mb-2 gap-1">
               <p className="text-muted-foreground">Dog Friendly</p>
               <StarRating rating={traits.dogFriendly} />
             </div>

@@ -992,4 +992,5 @@ export const MOCK_CAT_FAVOURITES_RESPONSE = {
       },
     },
   ],
+  paginationCount: 1,
 };

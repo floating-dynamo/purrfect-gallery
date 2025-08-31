@@ -99,8 +99,7 @@ const useFetchCats = () => {
     if (selectedBreedId) params.set('breedId', selectedBreedId);
 
     router.replace(`${pathname}?${params.toString()}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, sortBy, selectedBreedId]);
+  }, [currentPage, sortBy, selectedBreedId, pathname, router]);
 
   return {
     cats,

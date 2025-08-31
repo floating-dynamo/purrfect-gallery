@@ -2,6 +2,7 @@
 import useFetchFavourites from '@/features/cats/api/use-fetch-favourites';
 import CatListCard from '@/features/cats/components/cat-list-card';
 import CatListFallback from '@/features/cats/components/cat-list-fallback';
+import CatListPagination from '@/features/cats/components/cat-list-pagination';
 import CatListSkeleton from '@/features/cats/components/cat-list-skeleton';
 import CatToggleFavourite from '@/features/cats/components/cat-toggle-favourite';
 import { CATS_LIMIT_PER_PAGE } from '@/lib/constants';
@@ -12,8 +13,15 @@ const FavouritesPage = () => {
     favourites,
     isLoading,
     refetch: refetchFavourites,
+    currentPage,
+    handleNextPage,
+    handlePrevPage,
+    totalPages,
   } = useFetchFavourites();
   const [triggerRerender, setTriggerRerender] = useState(false);
+
+  const disablePreviousButton = currentPage === 1 || isLoading;
+  const disableNextButton = currentPage === totalPages || isLoading;
 
   const reTriggerRender = () => {
     setTriggerRerender((prev) => !prev);
@@ -50,6 +58,15 @@ const FavouritesPage = () => {
         ) : (
           <CatListFallback />
         )}
+      </div>
+      <div className="py-2 mt-2 flex items-center justify-center gap-4 font-sans">
+        <CatListPagination
+          currentPage={1}
+          disableNextButton={disableNextButton}
+          disablePreviousButton={disablePreviousButton}
+          handleNextPage={handleNextPage}
+          handlePrevPage={handlePrevPage}
+        />
       </div>
     </div>
   );
