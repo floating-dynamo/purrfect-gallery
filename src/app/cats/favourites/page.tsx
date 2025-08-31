@@ -42,9 +42,9 @@ const FavouritesPage = () => {
         ) : favourites && favourites.length > 0 ? (
           favourites.map((favCat) => (
             <div key={favCat.id}>
-              <div className="relative">
+              <div className="relative font-sans">
                 <CatListCard id={favCat.image_id} imgUrl={favCat.image.url} />
-                <div className="absolute bottom-1.5 right-3.5">
+                <div className="absolute top-16 right-6">
                   <CatToggleFavourite
                     catId={favCat.image_id}
                     favouriteId={favCat.id}

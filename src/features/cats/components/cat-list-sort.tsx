@@ -57,8 +57,10 @@ const CatListSort = ({
                 }
               }}
             >
+              {sortBy === value && (
+                <CheckIcon className="size-4 text-primary" />
+              )}
               {label}
-              {sortBy === value && <CheckIcon className="size-4" />}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>

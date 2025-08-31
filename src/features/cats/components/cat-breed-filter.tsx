@@ -88,7 +88,7 @@ function CatBreedFilter({
                       >
                         <CheckIcon
                           className={cn(
-                            'mr-2 h-4 w-4',
+                            'mr-2 h-4 w-4 text-primary',
                             selectedBreedId === breed.id
                               ? 'opacity-100'
                               : 'opacity-0'

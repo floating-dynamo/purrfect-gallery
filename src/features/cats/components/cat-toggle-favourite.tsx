@@ -33,8 +33,8 @@ const CatToggleFavourite = ({
       <Tooltip>
         <TooltipTrigger
           className={cn(
-            buttonVariants({ variant: 'default' }),
-            'w-fit cursor-pointer'
+            buttonVariants({ variant: 'link' }),
+            'w-fit cursor-pointer rounded-full'
           )}
           disabled={isLoading || isFetchingCatDetails}
           onClick={handleToggleFavourite}
@@ -42,7 +42,7 @@ const CatToggleFavourite = ({
           <HeartIcon
             className="size-8 hover:fill-pink-500 cursor-pointer rounded-full p-1"
             fill={favouriteId ? '#f6339a' : 'none'}
-            color={'white'}
+            color={favouriteId ? 'none' : 'white'}
           />
         </TooltipTrigger>
         <TooltipContent>
