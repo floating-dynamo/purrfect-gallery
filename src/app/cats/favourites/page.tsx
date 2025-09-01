@@ -61,7 +61,7 @@ const FavouritesPage = () => {
       </div>
       <div className="py-2 mt-2 flex items-center justify-center gap-4 font-sans">
         <CatListPagination
-          currentPage={1}
+          currentPage={currentPage}
           disableNextButton={disableNextButton}
           disablePreviousButton={disablePreviousButton}
           handleNextPage={handleNextPage}

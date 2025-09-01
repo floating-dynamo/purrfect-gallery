@@ -29,7 +29,7 @@ const CatListPagination = ({
         <ChevronLeftIcon className="size-4" />
         Previous
       </Button>
-      <Button>{currentPage}</Button>
+      <Button>Page {currentPage}</Button>
       <Button
         variant={'outline'}
         size={'lg'}
