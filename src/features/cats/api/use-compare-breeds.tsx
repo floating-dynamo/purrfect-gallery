@@ -8,12 +8,12 @@ const useCompareBreeds = () => {
   const router = useRouter();
 
   const getInitialBreed1 = () => {
-    const breed1 = searchParams.get('breed1');
+    const breed1 = searchParams.get('breedId1');
     return breed1 || '';
   };
 
   const getInitialBreed2 = () => {
-    const breed2 = searchParams.get('breed2');
+    const breed2 = searchParams.get('breedId2');
     return breed2 || '';
   };
 
@@ -27,8 +27,8 @@ const useCompareBreeds = () => {
 
   useEffect(() => {
     const params = new URLSearchParams();
-    if (breedId1) params.set('breed1', breedId1);
-    if (breedId2) params.set('breed2', breedId2);
+    if (breedId1) params.set('breedId1', breedId1);
+    if (breedId2) params.set('breedId2', breedId2);
 
     router.replace(`${pathname}?${params.toString()}`);
   }, [breedId1, breedId2, pathname, router]);
