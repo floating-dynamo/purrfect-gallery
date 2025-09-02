@@ -32,11 +32,12 @@ const FavouritesPage = () => {
   }, [triggerRerender, refetchFavourites]);
 
   return (
-    <div className="min-h-[80vh] px-8 py-4">
-      <h1 className="font-bold tracking-tight text-xl font-sans">
-        Favourites List
-      </h1>
-      <div className="flex items-center flex-wrap justify-center min-h-[60vh]">
+    <div className="min-h-[80vh] px-8 py-4 font-sans">
+      <h1 className="font-bold tracking-tight text-2xl">Favourites List</h1>
+      <p className="text-muted-foreground">
+        Save and organize your favourite cats in one place.
+      </p>
+      <div className="flex items-center flex-wrap justify-center min-h-[60vh] mt-8">
         {isLoading ? (
           <CatListSkeleton totalCards={CATS_LIMIT_PER_PAGE} />
         ) : favourites && favourites.length > 0 ? (

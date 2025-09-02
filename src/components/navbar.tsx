@@ -18,7 +18,7 @@ const Navbar = () => {
       {/* Logo */}
       <Link
         href="/"
-        className="font-bold text-lg sm:text-2xl flex gap-2 text-primary"
+        className="font-bold text-lg md:text-2xl flex gap-2 text-primary"
         onClick={() => setOpen(false)}
       >
         Purrfect Gallery <PawPrint className="size-4 sm:size-6" />
@@ -41,7 +41,7 @@ const Navbar = () => {
           <PopoverContent
             align="end"
             sideOffset={8}
-            className="flex flex-col gap-2 p-3 w-40"
+            className="flex flex-col gap-2 p-3 w-40 md:hidden"
           >
             <NavigationLinks
               className="flex flex-col gap-2"

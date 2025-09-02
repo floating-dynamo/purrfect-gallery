@@ -1,15 +1,19 @@
 'use client';
-import useFetchBreeds from '@/features/cats/api/use-fetch-breeds';
+import useCompareBreeds from '@/features/cats/api/use-compare-breeds';
 import CatBreedsCombobox from '@/features/cats/components/cat-breeds-combobox';
 import CatCompareDetailsCard from '@/features/cats/components/cat-compare-details-card';
 import { ArrowLeftRightIcon } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 
 const CompareBreedsPage = () => {
-  const { breeds, isLoading } = useFetchBreeds();
-
-  const [breedId1, setBreedId1] = useState('');
-  const [breedId2, setBreedId2] = useState('');
+  const {
+    breedId1,
+    breedId2,
+    breeds,
+    handleChangeBreedId1,
+    handleChangeBreedId2,
+    isLoading,
+  } = useCompareBreeds();
 
   return (
     <div className="min-h-[80vh] font-sans px-8 py-4">
@@ -23,7 +27,7 @@ const CompareBreedsPage = () => {
           <CatBreedsCombobox
             placeholder="Select Breed 1"
             selectedBreedId={breedId1}
-            handleChangeBreedId={(breedId) => setBreedId1(breedId)}
+            handleChangeBreedId={handleChangeBreedId1}
             breeds={breeds}
             isLoading={isLoading}
           />
@@ -36,7 +40,7 @@ const CompareBreedsPage = () => {
           <CatBreedsCombobox
             placeholder="Select Breed 2"
             selectedBreedId={breedId2}
-            handleChangeBreedId={(breedId) => setBreedId2(breedId)}
+            handleChangeBreedId={handleChangeBreedId2}
             breeds={breeds}
             isLoading={isLoading}
           />
